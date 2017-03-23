@@ -16,7 +16,7 @@ class CronJobManager extends AbstractManager
     /**
      * @var CronJob[]
      */
-    protected $jobs;
+    protected $jobs = array();
 
     /**
      * @param string $key
