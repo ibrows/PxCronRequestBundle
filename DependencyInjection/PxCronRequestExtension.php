@@ -31,8 +31,12 @@ class PxCronRequestExtension extends Extension
         $processor = new Processor();
         $config = $processor->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
+    	$cronjobs = array();
+    	if (null !== $config['cronjobs']) {
+    	    $cronjobs = $config['cronjobs'];
+    	}
         $container->getDefinition('px_cron_request.manager.cron_job')
-            ->replaceArgument(0, $config['cronjobs'])
+            ->replaceArgument(0, $cronjobs)
             ->replaceArgument(1, $config['encryption_key']);
     }
 }
