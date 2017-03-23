@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- Managers -->
+        <service id="px_cron_request.manager.cron_job" class="Px\CronRequestBundle\Manager\CronJobManager">
+            <argument/> <!-- Jobs Configuration -->
+            <argument/> <!-- Access Key -->
+            <argument>%kernel.root_dir%</argument>
+        </service>
+
+        <!-- Listeners -->
+        <service id="px_cron_request.listener.cron_job_call" class="Px\CronRequestBundle\EventListener\CronJobCallListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+            <argument type="service" id="px_cron_request.manager.cron_job"/>
+        </service>
+    </services>
+</container>
