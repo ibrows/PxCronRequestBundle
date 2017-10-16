@@ -23,14 +23,11 @@ class DumpCronKeysCommand extends ContainerAwareCommand
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return int|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $cronCommandManager = $this->getContainer()->get('px_cron_request.manager.cron_job');
         $cronCommandManager->processConfiguration();
         $cronCommandManager->outputConfiugration($output);
-
-        return 1;
     }
 }
