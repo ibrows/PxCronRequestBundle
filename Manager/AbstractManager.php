@@ -47,7 +47,11 @@ abstract class AbstractManager implements CronManagerInterface
             'cost' => 4,
             'salt' => $this->accessKey,
         );
-        $key =  password_hash(hash('sha256', sprintf('%s_%s', $cron->getName(), $cron->getJob())), PASSWORD_BCRYPT, $options);
+        $key = str_replace(
+            '/',
+            '_',
+            password_hash(hash('sha256', sprintf('%s_%s', $cron->getName(), $cron->getJob())), PASSWORD_BCRYPT, $options)
+        );
         $cron->setKey($key);
     }
 }
