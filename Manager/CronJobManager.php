@@ -83,6 +83,9 @@ class CronJobManager extends AbstractManager
             $exec .= $this->getConsolePath().' ';
         }
         $exec .= $cron->getJob();
+        if ($cron->isSymfonyCommand()) {
+            $exec .= $this->getEnvironmentOption();
+        }
 
         return $exec;
     }
@@ -177,5 +180,13 @@ class CronJobManager extends AbstractManager
     protected function getConsolePath()
     {
         return $this->kernelDir.'/../bin/console';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEnvironmentOption()
+    {
+        return sprintf(' --env=%s', $this->environment);
     }
 }
