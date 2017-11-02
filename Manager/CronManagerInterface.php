@@ -12,10 +12,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface CronManagerInterface
 {
     /**
+     * @param string $env
      * @param string $key
      * @return int
      */
-    public function execute($key);
+    public function execute($env, $key);
 
     /**
      * Converts configuration array into CronJob array
