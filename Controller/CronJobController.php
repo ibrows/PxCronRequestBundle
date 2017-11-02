@@ -14,10 +14,10 @@ class CronJobController extends Controller
      * @param string $key
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function webRequestAction($key)
+    public function webRequestAction($env, $key)
     {
         $cronCommandMananger = $this->container->get('px_cron_request.manager.cron_job');
-        $processId = $cronCommandMananger->execute($key);
+        $processId = $cronCommandMananger->execute($env, $key);
 
         return new JsonResponse([
             'id' => $processId,

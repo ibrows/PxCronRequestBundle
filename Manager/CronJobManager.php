@@ -19,13 +19,14 @@ class CronJobManager extends AbstractManager
     protected $jobs = array();
 
     /**
+     * @param string $env
      * @param string $key
      * @return int
      */
-    public function execute($key)
+    public function execute($env, $key)
     {
         $job = $this->getJobByKey($key);
-        $exec = $this->getExecutableScript($job);
+        $exec = $this->getExecutableScript($job, $env);
         $pid = (int) shell_exec(sprintf('%s %s %s 2>&1 & echo $!', $exec, '>', '/dev/null'));
 
         return $pid;
@@ -74,9 +75,10 @@ class CronJobManager extends AbstractManager
 
     /**
      * @param CronInterface|CronJob $cron
+     * @param string                $env
      * @return string
      */
-    protected function getExecutableScript(CronInterface $cron)
+    protected function getExecutableScript(CronInterface $cron, $env)
     {
         $exec = '';
         if ($cron->isSymfonyCommand()) {
@@ -84,7 +86,7 @@ class CronJobManager extends AbstractManager
         }
         $exec .= $cron->getJob();
         if ($cron->isSymfonyCommand()) {
-            $exec .= $this->getEnvironmentOption();
+            $exec .= $this->getEnvironmentOption($env);
         }
 
         return $exec;
@@ -183,10 +185,11 @@ class CronJobManager extends AbstractManager
     }
 
     /**
+     * @param string $env
      * @return string
      */
-    protected function getEnvironmentOption()
+    protected function getEnvironmentOption($env)
     {
-        return sprintf(' --env=%s', $this->environment);
+        return sprintf(' --env=%s', $env);
     }
 }

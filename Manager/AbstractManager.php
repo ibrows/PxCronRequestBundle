@@ -26,23 +26,16 @@ abstract class AbstractManager implements CronManagerInterface
     protected $kernelDir;
 
     /**
-     * @var
-     */
-    protected $environment;
-
-    /**
      * AbstractManager constructor.
      * @param array  $configuration
      * @param string $accessKey
      * @param string $kernelDir
-     * @param string $environment
      */
-    public function __construct(array $configuration, $accessKey, $kernelDir, $environment)
+    public function __construct(array $configuration, $accessKey, $kernelDir)
     {
         $this->configuration = $configuration;
         $this->accessKey = $accessKey;
         $this->kernelDir = $kernelDir;
-        $this->environment = $environment;
     }
 
     /**
